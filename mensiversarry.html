@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy 2 Months Mensiversary</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- AESTHETIC FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  background:radial-gradient(circle at top,#160022,#050010);
+  font-family:'DM Sans',sans-serif;
+  color:white;
+  overflow:hidden;
+}
+
+/* CANVAS */
+canvas{
+  position:fixed;
+  inset:0;
+  z-index:0;
+}
+
+/* START SCREEN */
+#startScreen{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.88);
+  z-index:10;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+  gap:12px;
+  cursor:pointer;
+}
+#startScreen span{
+  font-size:.85rem;
+  opacity:.6;
+}
+
+/* MAIN */
+.container{
+  position:relative;
+  z-index:2;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  padding:20px;
+  text-align:center;
+}
+
+/* TITLE */
+.title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.5rem,4.5vw,2.3rem);
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+
+/* NAME */
+.name{
+  font-size:clamp(1.1rem,3vw,1.4rem);
+  letter-spacing:1px;
+  opacity:.85;
+  animation:nameFloat 6s ease-in-out infinite;
+}
+
+@keyframes nameFloat{
+  0%{transform:translateY(0);opacity:.7}
+  50%{transform:translateY(-8px);opacity:1}
+  100%{transform:translateY(0);opacity:.7}
+}
+
+/* SLIDER */
+.slider{
+  width:92%;
+  max-width:420px;
+  height:260px;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 18px 35px rgba(255,120,200,.18);
+}
+.slides{
+  display:flex;
+  width:400%;
+  height:100%;
+  animation:slide 20s infinite ease-in-out;
+}
+.slides img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#0b0016;
+}
+
+@keyframes slide{
+  0%{margin-left:0}
+  25%{margin-left:-100%}
+  50%{margin-left:-200%}
+  75%{margin-left:-300%}
+  100%{margin-left:0}
+}
+
+/* SONG INFO */
+.songInfo{
+  font-size:.75rem;
+  opacity:.6;
+  margin-top:6px;
+  letter-spacing:.5px;
+}
+
+/* LOVE LETTER */
+#loveLetter{
+  position:fixed;
+  bottom:28%;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(10px);
+  padding:14px 22px;
+  border-radius:14px;
+  text-align:center;
+  font-size:.9rem;
+  line-height:1.7;
+  opacity:0;
+  transition:opacity 2s ease;
+  z-index:5;
+}
+#loveLetter.show{opacity:1}
+
+/* SECRET */
+#secretBtn{
+  position:fixed;
+  top:14px;
+  right:14px;
+  font-size:1.3rem;
+  cursor:pointer;
+  z-index:6;
+}
+#secretMsg{
+  position:fixed;
+  top:50px;
+  right:14px;
+  background:rgba(0,0,0,.7);
+  padding:8px 12px;
+  border-radius:10px;
+  font-size:.72rem;
+  opacity:0;
+  transition:.4s;
+  z-index:6;
+}
+#secretMsg.show{opacity:1}
+
+/* ENDING */
+#ending{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  gap:18px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 3s ease;
+  z-index:9;
+}
+#ending.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+#ending h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.1rem,6.5vw,3.2rem);
+  letter-spacing:2px;
+  animation:endingFloat 5s ease-in-out infinite;
+}
+
+@keyframes endingFloat{
+  0%{transform:translateY(0);opacity:.85}
+  50%{transform:translateY(-10px);opacity:1}
+  100%{transform:translateY(0);opacity:.85}
+}
+
+#resetBtn{
+  padding:10px 24px;
+  border:none;
+  border-radius:24px;
+  background:#ff6fae;
+  color:white;
+  font-size:.85rem;
+  letter-spacing:.5px;
+  cursor:pointer;
+}
+
+/* MOBILE */
+@media(max-width:480px){
+  .slider{height:230px}
+  #loveLetter{bottom:32%;}
+}
+</style>
+</head>
+
+<body>
+
+<div id="startScreen">
+  💖 Tap to Start 💖
+  <span>dengarkan sampai lagu berakhir</span>
+</div>
+
+<audio id="music">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="canvas"></canvas>
+
+<div class="container">
+  <div class="title">HAPPY 2 MONTHS MENSIVERSARY</div>
+  <div class="name">Kael & Kasa</div>
+
+  <div class="slider">
+    <div class="slides">
+      <img src="image1.png">
+      <img src="image2.png">
+      <img src="image3.png">
+      <img src="image4.png">
+    </div>
+  </div>
+
+  <div class="songInfo">
+    Until I Found You — Stephen Sanchez • 2:57
+  </div>
+</div>
+
+<div id="loveLetter">
+  <p>Two months with you felt like home.</p>
+  <p>Thank you for staying, laughing, and growing together.</p>
+  <p>I’m grateful I found you. 💖</p>
+</div>
+
+<div id="secretBtn">❤️</div>
+<div id="secretMsg">This website is only for you.</div>
+
+<div id="ending">
+  <h1>Happy 2 Months.<br>Still choosing you.</h1>
+  <button id="resetBtn">Reset</button>
+</div>
+
+<script>
+const canvas=document.getElementById("canvas"),
+ctx=canvas.getContext("2d"),
+music=document.getElementById("music"),
+loveLetter=document.getElementById("loveLetter"),
+ending=document.getElementById("ending");
+
+canvas.width=innerWidth;canvas.height=innerHeight;
+onresize=()=>{canvas.width=innerWidth;canvas.height=innerHeight};
+
+let particles=[],intensity=1,letterShown=false,ended=false;
+
+function heart(t){
+ return{
+  x:16*Math.pow(Math.sin(t),3),
+  y:-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))
+ }
+}
+
+function fire(power){
+ let cx=Math.random()*canvas.width,
+     cy=Math.random()*canvas.height/2;
+ for(let i=0;i<90*power;i++){
+  let t=Math.random()*Math.PI*2,p=heart(t);
+  particles.push({
+   x:cx,y:cy,
+   vx:p.x*.15*power,vy:p.y*.15*power,
+   life:1,color:`hsl(${330+Math.random()*40},100%,70%)`
+  });
+ }
+}
+
+function animate(){
+ ctx.fillStyle="rgba(0,0,0,.25)";
+ ctx.fillRect(0,0,canvas.width,canvas.height);
+ particles.forEach((p,i)=>{
+  p.x+=p.vx;p.y+=p.vy;p.life-=.012;
+  ctx.globalAlpha=p.life;
+  ctx.fillStyle=p.color;
+  ctx.beginPath();ctx.arc(p.x,p.y,2,0,Math.PI*2);ctx.fill();
+  if(p.life<=0)particles.splice(i,1);
+ });
+ ctx.globalAlpha=1;
+ requestAnimationFrame(animate);
+}
+
+function sync(){
+ let t=music.currentTime;
+ if(t>43&&!letterShown){
+   loveLetter.classList.add("show");
+   letterShown=true;
+ }
+ if(t>170&&!ended){
+   intensity=.3;
+   ending.classList.add("show");
+   ended=true;
+ }
+}
+
+document.getElementById("startScreen").onclick=()=>{
+ music.play();
+ document.getElementById("startScreen").style.display="none";
+ animate();
+ setInterval(()=>{sync();fire(intensity)},900);
+};
+
+document.getElementById("resetBtn").onclick=()=>location.reload();
+document.getElementById("secretBtn").onclick=()=>{
+ document.getElementById("secretMsg").classList.toggle("show");
+};
+</script>
+
+</body>
+</html>
